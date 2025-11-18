@@ -1,0 +1,14 @@
+@startuml
+title Diagrama de Estados - Entidade Template
+
+[*] --> EmCriacao : Criar novo template
+EmCriacao --> EmValidacao : Salvar e enviar para validação
+EmValidacao --> Ativo : Template validado com sucesso
+EmValidacao --> Rejeitado : Erro na validação / campos inválidos
+Rejeitado --> EmEdicao : Corrigir e reenviar
+EmEdicao --> EmValidacao : Submeter novamente
+Ativo --> EmEdicao : Editar template existente
+Ativo --> Desativado : Tornar inativo
+Desativado --> [*] : Fim do ciclo
+
+@enduml
