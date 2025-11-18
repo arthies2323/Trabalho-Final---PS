@@ -1,0 +1,21 @@
+@startuml
+title Diagrama de Sequência - UC-05 Gerenciar Itens
+
+actor Detentor as D
+participant "Interface Web" as UI
+participant "API Django" as API
+participant "Banco de Dados" as DB
+
+D -> UI : Acessa módulo de gerenciamento de itens
+UI -> API : Solicita lista de itens do acervo
+API -> DB : Consulta itens vinculados ao acervo
+DB --> API : Retorna lista de itens
+API --> UI : Exibe itens disponíveis
+
+D -> UI : Seleciona item para editar
+UI -> API : Envia dados atualizados
+API -> DB : Atualiza item no banco
+DB --> API : Confirma atualização
+API --> UI : Exibe mensagem de sucesso
+UI --> D : Mostra item atualizado
+@enduml
