@@ -1,0 +1,10 @@
+@startuml
+title Diagrama de Estados - Entidade Acervo
+
+[*] --> EmCriacao : Cadastrar acervo
+EmCriacao --> Ativo : Publicar acervo
+Ativo --> EmAtualizacao : Editar informações
+EmAtualizacao --> Ativo : Salvar alterações
+Ativo --> Arquivado : Tornar privado / arquivar
+Arquivado --> [*] : Encerrado
+@enduml
