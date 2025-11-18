@@ -1,0 +1,26 @@
+@startuml
+title Diagrama de Implantação - Sistema Santo Restauro
+
+node "Cliente Web" as Client {
+  component "Navegador (React/Vite)" as Front
+}
+
+node "Servidor de Aplicação" as Server {
+  component "Django REST Framework" as Backend
+  component "Módulos do Sistema" as Modules
+  Backend --> Modules : Carrega e executa módulos
+}
+
+node "Servidor de Banco de Dados" as DBServer {
+  database "PostgreSQL" as DB
+}
+
+node "Armazenamento de Arquivos" as StorageServer {
+  artifact "Object Storage (S3/local)" as Storage
+}
+
+' Relações
+Client --> Backend : Requisições HTTP/REST
+Backend --> DB : Conexão SQL
+Backend --> Storage : Upload/Download de arquivos
+@enduml
