@@ -1,0 +1,24 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(visitor, "Usuário Visitante", "Consulta acervos públicos e realiza buscas")
+Person(holder, "Detentor do Acervo", "Gerencia seus acervos, itens e templates")
+Person(admin, "Administrador", "Administra usuários, acervos e templates")
+
+System_Boundary(srs, "Santo Restauro System") {
+    System(srs_app, "Santo Restauro App", "Sistema para gerenciamento de acervos museológicos")
+}
+
+System_Ext(db, "Banco de Dados (PostgreSQL)", "Armazena dados de acervos, itens, templates e usuários")
+System_Ext(storage, "Object Storage (S3/local)", "Armazena arquivos gerados (PDF/XLSX)")
+System_Ext(apis, "Serviços Externos (APIs)", "Integrações via API (futuro)")
+
+Rel(visitor, srs_app, "Acessa via navegador")
+Rel(holder, srs_app, "Acessa via navegador e gerencia acervos")
+Rel(admin, srs_app, "Administra via interface web")
+
+Rel(srs_app, db, "Lê e grava dados")
+Rel(srs_app, storage, "Salva/recupera arquivos exportados")
+Rel(srs_app, apis, "Integra via API externa")
+
+@enduml
