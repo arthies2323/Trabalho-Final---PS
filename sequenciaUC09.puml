@@ -1,0 +1,18 @@
+@startuml
+title Diagrama de Sequência - UC-09 Exportar Item (PDF/XLSX)
+
+actor Detentor as D
+participant "Interface Web" as UI
+participant "API Django" as API
+participant "RelatorioService" as RS
+participant "Object Storage" as S3
+
+D -> UI : Solicita exportação de item
+UI -> API : Requisição /export-item/{id}?format=PDF
+API -> RS : Gerar relatório no formato solicitado
+RS -> S3 : Armazena arquivo gerado
+S3 --> RS : Retorna URL do arquivo
+RS --> API : Retorna link para download
+API --> UI : Retorna resposta JSON com link
+UI --> D : Exibe botão para download do PDF/XLSX
+@enduml
