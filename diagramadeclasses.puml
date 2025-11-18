@@ -1,0 +1,90 @@
+@startuml
+title Diagrama de Classes - Sistema Santo Restauro
+
+' ==========================
+' Classes de Usuário e Acesso
+' ==========================
+class Usuario {
+  - id: int
+  - nome: string
+  - email: string
+  - senha: string
+  - tipo: string
+  + autenticar(email, senha)
+  + alterarSenha()
+}
+
+class Administrador {
+  + gerenciarUsuarios()
+  + auditarAcoes()
+}
+
+class DetentorAcervo {
+  + cadastrarAcervo()
+  + exportarAcervo()
+}
+
+Usuario <|-- Administrador
+Usuario <|-- DetentorAcervo
+
+' ==========================
+' Classes de Domínio
+' ==========================
+class Acervo {
+  - id: int
+  - titulo: string
+  - descricao: string
+  - publico: bool
+  + adicionarItem(item)
+  + listarItens()
+}
+
+class Item {
+  - id: int
+  - nome: string
+  - descricao: string
+  - dataRegistro: date
+  + editarItem()
+  + exportarItem(formato)
+}
+
+class Template {
+  - id: int
+  - nome: string
+  - campos: json
+  + aplicarTemplate()
+}
+
+class ArquivoExportado {
+  - id: int
+  - tipoArquivo: string
+  - caminho: string
+  - dataGeracao: datetime
+  + gerarPDF()
+  + gerarXLSX()
+}
+
+' ==========================
+' Classes de Serviço (Regras de Negócio)
+' ==========================
+class RelatorioService {
+  + gerarRelatorioPDF(itens)
+  + gerarRelatorioXLSX(itens)
+}
+
+class TemplateService {
+  + validarCampos(template)
+  + clonarTemplate(template)
+}
+
+' ==========================
+' Relacionamentos
+' ==========================
+DetentorAcervo "1" -- "N" Acervo : possui >
+Acervo "1" -- "N" Item : contém >
+Item "1" --> "1" Template : usa >
+Item "0..1" --> "1" ArquivoExportado : gera >
+RelatorioService --> ArquivoExportado : cria >
+TemplateService --> Template : valida >
+
+@enduml
