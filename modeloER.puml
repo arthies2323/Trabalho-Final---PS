@@ -1,0 +1,85 @@
+@startuml
+title Modelo Entidade-Relacionamento (ER) - Sistema Santo Restauro
+
+skinparam backgroundColor #FAFAFA
+skinparam entity {
+  BackgroundColor #F9F9F9
+  BorderColor #333
+  FontSize 14
+}
+
+' ==================================
+' ENTIDADES
+' ==================================
+
+entity "USUARIO" as usuario {
+  *Usuario_ID : int <<PK>>
+  --
+  username : varchar(100)
+  email : varchar(50)
+  senha : varchar(100)
+  tipo_usuario : char(50)
+}
+
+entity "CONTRATANTE" as contratante {
+  *Contratante_ID : int <<PK>>
+  Usuario_FK : int <<FK>>
+  --
+  nome : varchar(225)
+  logradouro : varchar(225)
+  bairro : varchar(100)
+  numero : char(20)
+  cidade : varchar(100)
+  uf : char(2)
+  complemento : varchar(225)
+  cep : char(10)
+}
+
+entity "ACERVO" as acervo {
+  *Acervo_ID : int <<PK>>
+  Contratante_FK : int <<FK>>
+  --
+  nome : varchar(225)
+  nome_colecao : varchar(225)
+  categoria_acervo : varchar(100)
+  tipo_acervo : varchar(100)
+  quantidade_obras : char(10)
+  local_catalogacao : varchar(225)
+  produto_entregue : varchar(225)
+  responsavel_acesso : varchar(225)
+  telefone : char(20)
+  email : varchar(150)
+  prazo_execucao : varchar(100)
+  observacao : text
+  imagem : blob
+  public : boolean
+}
+
+entity "ITEM" as item {
+  *Item_ID : int <<PK>>
+  Acervo_FK : int <<FK>>
+  Template_FK : int <<FK>>
+  --
+  numero_inventario : int
+  tipo_item : varchar(50)
+  nome : varchar(100)
+  dados_item : json
+  imagem : blob
+}
+
+entity "TEMPLATE" as template {
+  *Template_ID : int <<PK>>
+  --
+  nome : varchar(50)
+  dados_template : json
+}
+
+' ==================================
+' RELACIONAMENTOS
+' ==================================
+usuario ||--|| contratante : "1:1"
+contratante ||--o{ acervo : "1:N"
+acervo ||--o{ item : "1:N"
+template ||--o{ item : "1:N"
+
+@enduml
