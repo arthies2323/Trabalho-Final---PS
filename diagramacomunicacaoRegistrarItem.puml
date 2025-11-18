@@ -1,0 +1,29 @@
+@startuml
+title Diagrama de Comunicação - UC-07 Registrar Item com base em Template
+
+skinparam linetype ortho
+skinparam nodesep 150
+skinparam ranksep 120
+
+object Detentor
+object InterfaceWeb
+object APIDjango
+object TemplateService
+object BancoDeDados
+
+Detentor -[#0000FF]-> InterfaceWeb : 1. Solicita tela de registro de item
+InterfaceWeb -[#0000FF]-> APIDjango : 2. Requisição GET /templates
+APIDjango -[#0000FF]-> TemplateService : 3. Busca templates disponíveis
+TemplateService -[#0000FF]-> BancoDeDados : 4. Consulta templates
+BancoDeDados -[#0000FF]-> TemplateService : 5. Retorna lista
+TemplateService -[#0000FF]-> APIDjango : 6. Retorna templates
+APIDjango -[#0000FF]-> InterfaceWeb : 7. Exibe opções de template
+InterfaceWeb -[#0000FF]-> Detentor : 8. Mostra templates
+
+Detentor -[#0000FF]-> InterfaceWeb : 9. Preenche dados e confirma
+InterfaceWeb -[#0000FF]-> APIDjango : 10. Envia novo item (POST)
+APIDjango -[#0000FF]-> BancoDeDados : 11. Salva item
+BancoDeDados -[#0000FF]-> APIDjango : 12. Confirma gravação
+APIDjango -[#0000FF]-> InterfaceWeb : 13. Retorna sucesso
+InterfaceWeb -[#0000FF]-> Detentor : 14. Exibe item registrado
+@enduml
