@@ -1,0 +1,24 @@
+@startuml
+title Diagrama de Sequência - UC-07 Registrar Item com base em Template
+
+actor Detentor as D
+participant "Interface Web" as UI
+participant "API Django" as API
+participant "TemplateService" as TS
+participant "Banco de Dados" as DB
+
+D -> UI : Acessa tela de registro de item
+UI -> API : Solicita templates disponíveis
+API -> TS : Buscar templates cadastrados
+TS -> DB : Consultar templates
+DB --> TS : Retorna lista de templates
+TS --> API : Retorna templates disponíveis
+API --> UI : Exibe opções de template
+
+D -> UI : Preenche dados e confirma registro
+UI -> API : Envia dados do novo item
+API -> DB : Salva item associado ao acervo
+DB --> API : Confirma gravação
+API --> UI : Exibe mensagem de sucesso
+UI --> D : Exibe item criado
+@enduml
