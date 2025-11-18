@@ -1,0 +1,10 @@
+@startuml
+title Diagrama de Estados - Entidade Usuário
+
+[*] --> Pendente : Cadastro criado
+Pendente --> Ativo : Validação de e-mail
+Ativo --> Suspenso : Violação de política / bloqueio temporário
+Suspenso --> Ativo : Reativação
+Ativo --> Inativo : Desativação manual
+Inativo --> [*]
+@enduml
