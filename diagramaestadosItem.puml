@@ -1,0 +1,14 @@
+@startuml
+title Diagrama de Estados - Entidade Item
+
+[*] --> Criado : Registrar novo item
+Criado --> EmEdicao : Editar dados
+EmEdicao --> Revisado : Salvar alterações
+Revisado --> Publicado : Tornar público
+Publicado --> Exportado : Gerar arquivo (PDF/XLSX)
+Exportado --> [*] : Encerrar ciclo
+
+' Transições reversas
+Revisado --> EmEdicao : Reabrir para edição
+Publicado --> EmEdicao : Editar novamente
+@enduml
