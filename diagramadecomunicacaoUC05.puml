@@ -1,0 +1,28 @@
+@startuml
+title Diagrama de Comunicação - UC-05 Gerenciar Itens
+
+skinparam linetype ortho
+skinparam nodesep 150
+skinparam ranksep 120
+
+' ======= OBJETOS ==========
+object Detentor
+object InterfaceWeb
+object APIDjango
+object BancoDeDados
+
+' ======= MENSAGENS ==========
+Detentor -[#0000FF]-> InterfaceWeb : 1. Solicita gerenciamento de itens
+InterfaceWeb -[#0000FF]-> APIDjango : 2. Requisição GET /itens
+APIDjango -[#0000FF]-> BancoDeDados : 3. Consulta itens do acervo
+BancoDeDados -[#0000FF]-> APIDjango : 4. Retorna lista de itens
+APIDjango -[#0000FF]-> InterfaceWeb : 5. Envia lista de itens
+InterfaceWeb -[#0000FF]-> Detentor : 6. Exibe itens na interface
+
+Detentor -[#0000FF]-> InterfaceWeb : 7. Edita item selecionado
+InterfaceWeb -[#0000FF]-> APIDjango : 8. Envia atualização do item (PUT)
+APIDjango -[#0000FF]-> BancoDeDados : 9. Atualiza registro
+BancoDeDados -[#0000FF]-> APIDjango : 10. Confirma atualização
+APIDjango -[#0000FF]-> InterfaceWeb : 11. Retorna sucesso
+InterfaceWeb -[#0000FF]-> Detentor : 12. Exibe item atualizado
+@enduml
